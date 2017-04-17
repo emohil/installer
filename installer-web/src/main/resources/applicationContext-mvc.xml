@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+  default-lazy-init="true">
+
+  <bean id="converter"
+    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    <property name="objectMapper">
+      <bean class="com.company.util.json.JsonObjectMapper" />
+    </property>
+    <property name="supportedMediaTypes">
+      <list>
+        <value>application/json;charset=UTF-8</value>
+      </list>
+    </property>
+  </bean>
+
+  <mvc:annotation-driven conversion-service="conversionService"
+    ignoreDefaultModelOnRedirect="true">
+    <mvc:message-converters>
+      <ref bean="converter" />
+    </mvc:message-converters>
+    <mvc:argument-resolvers>
+      <bean class="com.company.context.web.PrefixedParamResolver" />
+    </mvc:argument-resolvers>
+  </mvc:annotation-driven>
+
+  <bean id="conversionService"
+    class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    <property name="converters">
+      <list>
+        <bean class="com.company.context.web.DateConverter" />
+      </list>
+    </property>
+  </bean>
+
+  <!-- ①：对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+  <context:component-scan base-package="com.company.**.controller" />
+
+  <context:property-placeholder location="classpath*:freemarker.properties"
+    ignore-unresolvable="true" />
+
+  <!-- Freemarker Configuration -->
+  <bean
+    class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    <property name="templateLoaderPaths" value="/WEB-INF/views/" />
+    <property name="freemarkerSettings">
+      <props>
+        <prop key="defaultEncoding">UTF-8</prop>
+        <prop key="url_escaping_charset">UTF-8</prop>
+        <prop key="template_update_delay">${template.template_update_delay}</prop>
+        <prop key="tag_syntax">auto_detect</prop>
+        <prop key="whitespace_stripping">true</prop>
+        <prop key="classic_compatible">true</prop>
+        <prop key="number_format">${template.number_format}</prop>
+        <prop key="boolean_format">${template.boolean_format}</prop>
+        <prop key="datetime_format">${template.datetime_format}</prop>
+        <prop key="date_format">${template.date_format}</prop>
+        <prop key="time_format">${template.time_format}</prop>
+        <prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+      </props>
+    </property>
+    <property name="freemarkerVariables">
+      <map>
+        <entry key="base" value="#{servletContext.contextPath}" />
+        <entry key="date_format" value="${template.date_format}" />
+        <entry key="time_format" value="${template.time_format}" />
+        <entry key="datetime_format" value="${template.datetime_format}" />
+      </map>
+    </property>
+  </bean>
+  <bean id="viewResolver"
+    class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <property name="contentType" value="text/html; charset=UTF-8" />
+    <property name="suffix" value=".ftl" />
+  </bean>
+
+  <bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- set the max upload size100MB -->
+    <property name="maxUploadSize">
+      <value>104857600</value>
+    </property>
+    <property name="maxInMemorySize">
+      <value>4096</value>
+    </property>
+  </bean>
+
+  <bean id="exceptionResolver" class="com.company.context.web.DefaultMappingExceptionResolver">
+    <property name="exceptionMappings">
+      <props>
+        <prop key="java.lang.Exception">/static/html/500.html</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean class="com.company.context.InitializerContext"></bean>
+
+</beans>

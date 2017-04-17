@@ -1,0 +1,93 @@
+body {
+  width: 100%;
+  text-align: center;
+  background-color: transparent;
+}
+
+body, a {
+  color: #282828;
+}
+
+.bkI {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#indexForm {
+  width: 471px;
+  padding-top: 210px;
+  margin: 0 auto;
+}
+
+.form {
+  width: 471px;
+  padding: 3px 0 45px;
+  background-color: #DEDCDA;
+  color: #9A9A9A;
+}
+
+.logo {
+  width: 80px;
+  height: 81px;
+  margin: -43px auto 30px auto;
+}
+
+.inputDiv {
+  position: relative;
+  width: 249px;
+  margin: 0 auto 25px auto;
+}
+
+.inputDiv>.input {
+  width: 249px;
+  height: 30px;
+}
+
+.inputDiv>.input>input {
+  width: 225px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 12px;
+  border-radius: 2px;
+  border: 0 none;
+  font-size: 14px;
+  color: #9A9A9A;
+}
+
+.errMsg {
+  font-size: 12px;
+  text-align: left;
+  color: #F15656;
+  padding: 5px;
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 249px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.login {
+  width: 249px;
+  height: 39px;
+  cursor: pointer;
+  line-height: 39px;
+  margin: 0 auto;
+  background-color: #069CD6;
+  color: #fff;
+  border-radius: 2px;
+  line-height: 39px;
+}
+
+.hide {
+  display: none;
+}

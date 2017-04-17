@@ -1,0 +1,41 @@
+body {
+  background-color: #bebdbd;
+}
+
+#header {
+  position : relative;
+  border-radius: 2px;
+  background-color: #069CD6;
+  color: #fff;
+}
+
+#header .row, #header .row > div {
+  height: 42px;
+  line-height: 42px;
+}
+
+#contentRegion {
+  margin-top: -5px;
+}
+
+.control-label.required:before {
+  content: "*";
+  color: red;
+}
+
+table thead {
+  background-color: #E6E6E6 !important;
+}
+
+.text-middle {
+  line-height: 34px;
+}
+
+.divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}

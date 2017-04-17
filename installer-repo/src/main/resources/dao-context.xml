@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+  <context:property-placeholder location="classpath*:jdbc.properties"
+    ignore-unresolvable="true" />
+
+  <context:component-scan base-package="com.company.repo" />
+
+  <!--配置数据库数据源 -->
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+    destroy-method="close">
+    <property name="driverClass" value="${jdbc.driver}" />
+    <property name="jdbcUrl" value="${jdbc.url}" />
+    <property name="user" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <property name="initialPoolSize" value="${connection_pools.initial_pool_size}" />
+    <property name="minPoolSize" value="${connection_pools.min_pool_size}" />
+    <property name="maxPoolSize" value="${connection_pools.max_pool_size}" />
+    <property name="maxIdleTime" value="${connection_pools.max_idle_time}" />
+    <property name="acquireIncrement" value="${connection_pools.acquire_increment}" />
+    <property name="checkoutTimeout" value="${connection_pools.checkout_timeout}" />
+
+    <!-- 连接失败后,再次尝试的间隔时间和最大次数,无太大实际意义 -->
+    <property name="acquireRetryDelay" value="1000" />
+    <property name="acquireRetryAttempts" value="3" />
+    <!-- 会增加过大的消耗 -->
+    <property name="testConnectionOnCheckout" value="false" />
+    <property name="testConnectionOnCheckin" value="false" />
+    <!-- 如果一次连接失败,则该数据源被声明失败并关闭. 默认false -->
+    <property name="breakAfterAcquireFailure" value="false" />
+  </bean>
+
+
+  <bean id="entityManagerFactory"
+    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="persistenceXmlLocation" value="classpath*:/persistence.xml" />
+    <property name="persistenceUnitName" value="persistenceUnit" />
+    <property name="packagesToScan" value="com.company.po" />
+    <property name="jpaVendorAdapter">
+      <bean
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="${hibernate.show_sql}" />
+        <property name="generateDdl" value="true" />
+      </bean>
+    </property>
+    <property name="jpaProperties">
+      <props>
+        <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+        <!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.DefaultNamingStrategy</prop> -->
+        <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.DefaultNamingStrategy</prop>
+        <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+        <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+        <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
+        <prop key="hibernate.jdbc.fetch_size">${hibernate.jdbc.fetch_size}</prop>
+        <prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+        <prop key="hibernate.connection.isolation">2</prop>
+        <prop key="javax.persistence.validation.mode">none</prop>
+        <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider
+        </prop>
+        <prop key="hibernate.search.default.indexBase">${java.io.tmpdir}/shop/index</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory" />
+  </bean>
+
+  <!-- hibernate3 sessionFactory -->
+  <bean id="sessionFactory"
+    class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"></property>
+    <property name="packagesToScan">
+      <list>
+        <value>com.company.*.po</value>
+      </list>
+    </property>
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+        <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+      </props>
+    </property>
+  </bean>
+
+  <tx:annotation-driven transaction-manager="transactionManager" />
+
+  <bean class="com.company.repo.fw.dao.impl.SqlDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+</beans>

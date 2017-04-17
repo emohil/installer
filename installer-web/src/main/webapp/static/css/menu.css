@@ -1,0 +1,51 @@
+
+
+.nav-menu {
+  margin-top: -5px;
+  margin-right: -15px;
+  margin-left: -14px;
+}
+
+.nav-menu .title {
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  color: #E6E6E6;
+  background-color: #282828;
+  text-align: center;
+}
+
+.nav-menu .title img {
+  text-align: center;
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  position: absolute;
+}
+
+.nav-menu .list {
+  position: relative;
+  display: block;
+  height: 37px;
+  line-height: 37px;
+  border-bottom: 1px solid #fff;
+  background-color: #E6E6E6;
+  font-size: 12px;
+  text-align: center;
+}
+
+nav-menu .list>div {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 12px;
+  height: 37px;
+}
+
+nav-menu .list.active {
+  background-color: #CECCCC;
+}
+
+nav-menu .list.active>div {
+  background-color: #069CD6;
+}

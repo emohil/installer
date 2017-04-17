@@ -1,0 +1,1 @@
+<script src="static/scripts/core/ifu-cityselect2.js"></script>

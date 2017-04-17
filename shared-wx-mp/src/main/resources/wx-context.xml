@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+    http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+  <context:property-placeholder location="classpath*:wx.properties" ignore-unresolvable="true" />
+
+  <bean id="wxMpConfigStorage" class="com.company.wx.mp.api.impl.WxMpInMemoryConfigStorage">
+    <property name="appId" value="${wx.appId}" />
+    <property name="secret" value="${wx.secret}" />
+    <property name="token" value="${wx.token}" />
+    <property name="aesKey" value="${wx.aesKey}" />
+  </bean>
+
+  <bean id="wxMpService" class="com.company.wx.mp.api.impl.WxMpServiceImpl">
+    <property name="wxMpConfigStorage" ref="wxMpConfigStorage" />
+  </bean>
+
+
+</beans>

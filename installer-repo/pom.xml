@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.company</groupId>
+    <artifactId>installer</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>installer-repo</artifactId>
+
+  <dependencies>
+    <!-- inner dependencies begin -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>installer-dto</artifactId>
+    </dependency>
+    <!-- inner dependencies end -->
+
+    <!-- shared dependencies begin -->
+    <dependency>
+      <groupId>com.company</groupId>
+      <artifactId>shared-repo</artifactId>
+    </dependency>
+    <!-- shared dependencies end -->
+    
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+    </dependency>
+
+  </dependencies>
+</project>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安装项目部署说明</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-book"></i>&nbsp;环境要求</h2>
+        <p>Java1.7+</p>
+        <p>Tomcat7.0</p>
+        <p>MySQL5.5+</p>
+        <p>IE11, Firefox45+, Chrome49+</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-download-alt"></i>&nbsp;程序下载</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>说明</th>
+              <th>下载</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="success">
+              <td>1</td>
+              <td>PC端应用程序</td>
+              <td><a class="btn btn-link btn-xs" href="web.war">web.war</a></td>
+            </tr>
+            <tr class="active">
+              <td>2</td>
+              <td>Android接口程序</td>
+              <td><a class="btn btn-link btn-xs" href="api.war">api.war</a></td>
+            </tr>
+            <tr class="info">
+              <td>3</td>
+              <td>手机站wap页面，如评价页面</td>
+              <td><a class="btn btn-link btn-xs" href="wap.war">wap.war</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-inbox"></i>&nbsp;部署程序</h2>
+        <h4 class="text-warning">方式一：将下载的war程序包放到$TOMCAT/webapps
+          启动Tomcat自动解压</h4>
+        <h4 class="text-info">方式二：手动解压war后，放到$TOMCAT/webapps目录</h4>
+        <p>这里先假设我们程序访问路径分别为：</p>
+        <p><code>http://zlyijia.com/web</code></p>
+        <p><code>http://zlyijia.com/api</code></p>
+        <p><code>http://zlyijia.com/wap</code></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-hdd"></i>&nbsp;文件服务器</h2>
+        <p>建议将日常操作上传的文件单独存放，并配置专门的http方式访问</p>
+        <p>这里先假设我们文件存放目录和访问路径分别为：</p>
+        <p><code>/data/files/zl/</code></p>
+        <p><code>http://zlyijia.com:9090/zl/</code></p>
+        <p>注意：这里不能使用80端口，不能跟主程序冲突</p>
+        <p>这些参数将在下面的配置中使用</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-cog"></i>&nbsp;修改配置文件</h2>
+        <h4 class="text-primary">数据库连接信息</h4>
+        <p>
+          <code>WEB-INF/classes/jdbc.properties</code>
+        </p>
+        <p>注意：每个war的数据库连接都需要修改</p>
+
+        <h4 class="text-primary">修改环境配置文件</h4>
+        <p>
+          <code>WEB-INF/classes/environment.properties</code>
+        </p>
+        <p class="text-warning">主要是如下参数：</p>
+        <p class="bg-info">#取消调试模式，否则无法接收短信</p>
+        <p>
+          <code>debugmode=false</code>
+        </p>
+        <p class="bg-info">#上传的文件存储目录</p>
+        <p>
+          <code>file.upload.basepath=/data/files/zl/</code>
+        </p>
+        <p class="bg-info">#文件的http访问url根目录</p>
+        <p>
+          <code>file.download.basepath=http://zlyijia.com:9090/zl/</code>
+        </p>
+        <p class="bg-info">#SMS短信配置</p>
+        <p>
+          <code>sms.serviceUrl=http://yxt.bbn.com.cn/eums/rpc/</code>
+        </p>
+        <p>
+          <code>sms.account=test</code>
+        </p>
+        <p>
+          <code>sms.password=test</code>
+        </p>
+        <p class="bg-info">#apk version</p>
+        <p>
+          <code>versionNumber=1.0.1</code>
+        </p>
+        <p>
+          <code>versionUrl=http://zlyijia.com/api/static/com.company.master_1.0.1.apk</code>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-import"></i>&nbsp;初始化数据</h2>
+        <p>确保上面步骤的数据库配置信息正确后，在启动tomcat, 这时程序将自动生成数据表</p>
+        <p>
+           执行
+          <code>$TOMCAT/webapps/web/WEB-INF/classes/rs</code>
+          下的所有初始化语句（不分先后）
+        </p>
+        
+        <p></p>
+        <p>将示意图复制到文件服务器：</p>
+        <p>将<code>$TOMCAT/webapps/web/static/images/sketch</code>文件夹复制到<code>/data/files/zl/</code>下即可</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-play"></i>&nbsp;启动程序</h2>
+        <p>启动Tomcat服务即可</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-th-list"></i>&nbsp;其他说明</h2>
+        <p>打包的apk文件需要在里面写上服务器地址</p>
+        <p>
+          目前为
+          <code>http://zlyijia.com</code>
+        </p>
+        <p>如有变化，请告知我们，将重新生成apk文件
+      </div>
+    </div>
+  </div>
+</body>
+
+
+
+</html>

@@ -1,0 +1,63 @@
+/**显示主页的*/
+#section > div.right {
+  position: relative;
+  height: 849px;
+  padding: 39px 38px 0 38px;
+  color: #3C3C3C;
+}
+.bkI {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 1010px;
+  height: 100%;
+  z-index: -1;
+}
+.menuList {
+  margin-bottom: 21px;
+  overflow: hidden;
+}
+.menuList > div {
+  width: 456px;
+  border-radius: 2px;
+  background-color: #F2F4F3;
+}
+.menuList > .d1 {
+  float: left;
+}
+.menuList > .d2 {
+  float: right;
+}
+.listName {
+  height: 99px;
+  line-height: 99px;
+  padding: 0 30px;
+  color: #069CD6;
+  font-size: 24px;
+  text-align: left;
+  border-bottom: 1px solid #BDBDBD;
+}
+.listInfo {
+  overflow: hidden;
+}
+.listInfo > a {
+  display: block;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 30px;
+}
+a.odd {
+  background-color: #EBECEC;
+}
+.listInfo > a > .infoTitle {
+  float: left;
+}
+.listInfo > a > .infoDetail {
+  float: right;
+}
+.listInfo > a > div span {
+  padding: 0 6px 0 3px;
+  color: #069CD6;
+}
